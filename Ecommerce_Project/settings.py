@@ -28,11 +28,17 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'crispy_forms',
+    'App_Login',
+    'App_Shop',
 ]
 
 
 # bootstrap, bootstrap3, bootstrap4, uni-form
 CRISPY_TEMPLATE_PACK= 'bootstrap4'
+
+
+# Custom user model
+AUTH_USER_MODEL = 'App_Login.User'
 
 
 MIDDLEWARE = [
