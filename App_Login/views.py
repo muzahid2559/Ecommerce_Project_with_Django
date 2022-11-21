@@ -1,20 +1,16 @@
-from django.shortcuts import render, HttpResponseRedirect
-from django.urls import reverse
-from django.http import HttpResponse
-
-
-
-# Authetication
-from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth import login, logout, authenticate
-
-# Forms and Models
-from App_Login.models import Profile
-from App_Login.forms import ProfileForm, SignUpForm
-
 # Messages
 from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+# Authetication
+from django.contrib.auth.forms import AuthenticationForm
+from django.http import HttpResponse
+from django.shortcuts import HttpResponseRedirect, render
+from django.urls import reverse
+
+from App_Login.forms import ProfileForm, SignUpForm
+# Forms and Models
+from App_Login.models import Profile
 
 # Create your views here.
 
@@ -39,7 +35,7 @@ def login_user(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                return HttpResponse('Logged in')
+                return HttpResponseRedirect(reverse('App_Shop:home'))
     return render(request, 'App_Login/login.html', context={'form':form})
 
 
@@ -47,7 +43,7 @@ def login_user(request):
 def logout_user(request):
     logout(request)
     messages.warning(request, "You are logged out!!")
-    return HttpResponse('Logged Out')
+    return HttpResponseRedirect(reverse('App_Shop:home'))
 
 @login_required
 def user_profile(request):
