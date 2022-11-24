@@ -82,7 +82,19 @@ def payment(request):
 
 
 
-@login_required
+@csrf_exempt
 def complete(request):
+    if request.method == 'POST' or request.method == 'post':
+        payment_data = request.POST
+        status = payment_data['status']
+
+        if status == 'VALID':
+            val_id = payment_data['val_id']
+            tran_id = payment_data['tran_id']
+            messages.success(request,f"Your Payment Completed Successfully! Page will be redirected!")
+        elif status == 'FAILED':
+            messages.warning(request, f"Your Payment Failed! Please Try Again! Page will be redirected!")
+
+
     return render(request, "App_Payment/complete.html", context={})
 
